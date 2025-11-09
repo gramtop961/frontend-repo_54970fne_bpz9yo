@@ -1,28 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
+import Navbar from './components/Navbar.jsx';
+import Hero from './components/Hero.jsx';
+import Home from './components/Home.jsx';
+import About from './components/About.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [route, setRoute] = useState('home');
+
+  // Respect system preference on first load
+  useEffect(() => {
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = stored || (prefersDark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
+    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors">
+      <div className="fixed inset-0 pointer-events-none">
+        {/* subtle grid backdrop for a tech vibe */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(99,102,241,0.15)_1px,transparent_1px)] [background-size:24px_24px] opacity-50 dark:opacity-40" />
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-indigo-500/15 to-transparent dark:from-cyan-500/10" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-fuchsia-500/10 to-transparent" />
       </div>
-    </div>
-  )
-}
 
-export default App
+      <Navbar route={route} onNavigate={setRoute} />
+
+      {route === 'home' ? (
+        <>
+          <Hero />
+          <Home />
+        </>
+      ) : (
+        <About />
+      )}
+    </div>
+  );
+}
