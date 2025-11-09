@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BookOpenText, ExternalLink, Loader2, GraduationCap } from 'lucide-react';
+import MacWindow from '../MacWindow';
 
 // Fetch latest Medium posts using RSS-to-JSON (no auth needed). Replace USERNAME with Medium handle.
 const MEDIUM_USERNAME = 'medium'; // change to Siddiq's handle when available
@@ -37,40 +38,42 @@ export default function Writing() {
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold flex items-center gap-2"><BookOpenText className="w-5 h-5 text-indigo-600 dark:text-cyan-400" /> Writing</h3>
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-xl font-semibold flex items-center gap-2"><BookOpenText className="w-5 h-5 text-slate-900 dark:text-white" /> Writing</h3>
         <a
           href={GOOGLE_SCHOLAR_URL}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-indigo-700 dark:text-cyan-300 hover:underline"
+          className="inline-flex items-center gap-2 text-sm text-slate-900 dark:text-white hover:underline"
         >
           <GraduationCap className="w-4 h-4" /> Google Scholar
         </a>
       </div>
 
-      {loading && (
-        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300"><Loader2 className="w-4 h-4 animate-spin" /> Loading latest posts…</div>
-      )}
-      {error && (
-        <div className="text-sm text-rose-600 dark:text-rose-400">{error}</div>
-      )}
+      <MacWindow title="medium.com">
+        {loading && (
+          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300"><Loader2 className="w-4 h-4 animate-spin" /> Loading latest posts…</div>
+        )}
+        {error && (
+          <div className="text-sm text-rose-600 dark:text-rose-400">{error}</div>
+        )}
 
-      {!loading && !error && (
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {posts.map((p) => (
-            <li key={p.link} className="rounded-lg border border-slate-200/60 dark:border-slate-800 p-4 bg-white/50 dark:bg-slate-900/40">
-              <a href={p.link} target="_blank" rel="noreferrer" className="group block">
-                <div className="font-medium group-hover:underline">{p.title}</div>
-                <div className="text-xs text-slate-500 mt-1">{new Date(p.pubDate).toLocaleDateString()}</div>
-                <div className="mt-3 inline-flex items-center gap-1 text-indigo-600 dark:text-cyan-400 text-sm">
-                  Read on Medium <ExternalLink className="w-4 h-4" />
-                </div>
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+        {!loading && !error && (
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {posts.map((p) => (
+              <li key={p.link} className="rounded-xl border border-slate-200/60 dark:border-slate-800 p-4 bg-white/60 dark:bg-slate-900/50">
+                <a href={p.link} target="_blank" rel="noreferrer" className="group block">
+                  <div className="font-medium group-hover:underline">{p.title}</div>
+                  <div className="text-xs text-slate-500 mt-1">{new Date(p.pubDate).toLocaleDateString()}</div>
+                  <div className="mt-3 inline-flex items-center gap-1 text-slate-900 dark:text-white text-sm">
+                    Read on Medium <ExternalLink className="w-4 h-4" />
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </MacWindow>
     </section>
   );
 }

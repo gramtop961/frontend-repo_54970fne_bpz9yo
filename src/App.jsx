@@ -16,12 +16,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_left,rgba(15,23,42,0.06),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(15,23,42,0.06),transparent_40%)] dark:bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.06),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(255,255,255,0.06),transparent_40%)] text-slate-900 dark:text-slate-100 transition-colors">
+      {/* Subtle iOS/Mac-like background with glass and depth */}
       <div className="fixed inset-0 pointer-events-none">
-        {/* subtle grid backdrop for a tech vibe */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(99,102,241,0.15)_1px,transparent_1px)] [background-size:24px_24px] opacity-50 dark:opacity-40" />
-        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-indigo-500/15 to-transparent dark:from-cyan-500/10" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-fuchsia-500/10 to-transparent" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.6),transparent_30%)] dark:bg-[linear-gradient(to_bottom,rgba(0,0,0,0.35),transparent_30%)]" />
       </div>
 
       <Navbar route={route} onNavigate={setRoute} />
